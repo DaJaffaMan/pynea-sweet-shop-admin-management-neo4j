@@ -27,6 +27,8 @@ services:
     ports:
       - 7474:7474
     volumes:
-      - ./neo4j:/data
+      - ./neo4j/data:/var/lib/neo4j/data
+      - ./neo4j/import:/var/lib/neo4j/import
+      - ./neo4j/logs:/var/lib/neo4j/logs
     environment:
       NEO4J_AUTH: neo4j/password
