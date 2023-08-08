@@ -1,0 +1,7 @@
+id,type,capacity,status
+1,Vending Machine,100,Operational
+2,Vending Machine,80,Maintenance
+3,Candy Dispenser,500,Operational
+4,Candy Dispenser,400,Out of Order
+5,Chocolate Machine,300,Operational
+6,Chocolate Machine,250,Maintenance
