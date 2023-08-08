@@ -3,8 +3,8 @@
 
 import { Field, InputType, ObjectType } from "@nestjs/graphql";
 
-@ObjectType()
-@InputType()
+@ObjectType("Order")
+@InputType("OrderInput")
 export class Order {
     @Field(() => String)
     orderId: string;

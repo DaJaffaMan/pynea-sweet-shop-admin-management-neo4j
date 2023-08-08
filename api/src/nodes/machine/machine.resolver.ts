@@ -1,8 +1,6 @@
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { Machine, MachineInput } from './machine.types';
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { MachineService } from './machine.service';
-// import { MachineService } from './machine.service';
-// import { Machine, MachineInput } from './';
+import { Machine } from './machine.types';
 
 @Resolver(() => Machine)
 export class MachineResolver {
@@ -14,11 +12,7 @@ export class MachineResolver {
     }
 
     @Query(() => Machine)
-    async machine(@Args('id', { type: String }) id: string) {
-    }
-
-    @Mutation(() => MachineInput)
-    async addMachine(@Args('machine') machine: MachineInput) {
+    async machine(@Args('id') id: string) {
     }
 
     @ResolveField()

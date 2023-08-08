@@ -3,7 +3,6 @@ import { MachineService } from './machine.service';
 import { MachineResolver } from './machine.resolver';
 
 @Module({
-  providers: [MachineService],
-  controllers: [MachineResolver]
+  providers: [MachineResolver, MachineService],
 })
 export class MachineModule {}

@@ -10,6 +10,11 @@ services:
       - ./neo4j/data:/var/lib/neo4j/data
       - ./neo4j/import:/var/lib/neo4j/import
       - ./neo4j/logs:/var/lib/neo4j/logs
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:7474/", "||", "exit 1"] 
+      interval: 10s
+      timeout: 2s
+      retries: 10
     environment:
       NEO4J_AUTH: neo4j/password
       NEO4J_PLUGINS: "[\"apoc\"]"

@@ -3,6 +3,7 @@ FROM node:18.17.0-alpine3.18 as build
 WORKDIR /usr/app/src
 
 COPY --chown=node:node ./dist ./
+COPY .env ./
 COPY package*.json ./
 
 HEALTHCHECK --start-period=5s \

@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 import { GraphQLSchemaHost } from "@nestjs/graphql";
 
 async function bootstrap() {
-  const port = process.env.API_PORT;
+  const port = process.env.PORT;
   if (!port) {
     throw new Error("PORT environment variable not set");
   }
