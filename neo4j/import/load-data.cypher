@@ -16,9 +16,21 @@ WHERE s.sweet CONTAINS 'chocolate' AND m.type CONTAINS 'Chocolate'
 CREATE (m)-[:PRODUCES]->(s);
 
 MATCH (m:Machine)->(s:Sweet)
+WHERE s.sweet CONTAINS 'chocolate' AND m.type CONTAINS 'Chocolate'
+CREATE (m)-[:PRODUCES_CHOCOLATE]->(s);
+
+MATCH (m:Machine)->(s:Sweet)
 WHERE s.sweet CONTAINS 'candy' AND m.type CONTAINS 'Candy'
 CREATE (m)-[:PRODUCES]->(s);
 
 MATCH (m:Machine)->(s:Sweet)
+WHERE s.sweet CONTAINS 'candy' AND m.type CONTAINS 'Candy'
+CREATE (m)-[:PRODUCES_CANDY]->(s);
+
+MATCH (m:Machine)->(s:Sweet)
 WHERE m.type CONTAINS 'Vending'
 CREATE (m)-[:PRODUCES]->(s);
+
+MATCH (m:Machine)->(s:Sweet)
+WHERE m.type CONTAINS 'Vending'
+CREATE (m)-[:PRODUCES_MIXED]->(s);
