@@ -1,23 +1,21 @@
 version: "3.9" 
 
 services:
-  machine:
+  machine-graph:
     build: 
-      context: ./nestjs
-      # dockerfile: machine.dockerfile
+      context: ./api
+      dockerfile: ./machine.Dockerfile
       target: development
     platform: linux/amd64
     ports: 
       - 4000:4000
       - 9229:9229
     volumes:
-      - ./api/src/:/usr/api/machine/src
-      - ./package.json:/usr/api/machine/package.json
+      - ./src/:/usr/api/machine/src
+      - ./api/.env:/usr/api/machine/.env
       - ~/.config/gcloud:/home/node/.config/gcloud
-    environment:
-      ENVIRONMENT: local
     env_file:
-      - api/.env
+      - ./api/.env
     depends_on:
       - neo4j
     command: npm run install:start:dev
