@@ -1,12 +1,19 @@
 #!/bin/bash
-
 machine-install: ## Install backend dependencies
-	cd machine-api && \
-	npm ci
+	cd api && \
+	npm i
 
-machine-start: ## Start backend
-	cd machine-api && \
-	npm start
+start-machine-graph: ## Start machine graph
+	docker compose up -d machine
+
+start-neo4j: ## Start neo
+	docker compose up -d neo4j
+
+start-system: ## Start everything
+	docker compose up -d
+
+stop-system: ## stop everything
+	docker compose down
 
 # Misc
 help: ## Used to display the help
