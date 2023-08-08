@@ -1,6 +1,21 @@
 version: "3.9" 
 
 services:
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - 7474:7474
+      - 7687:7687
+    volumes:
+      - ./neo4j/data:/var/lib/neo4j/data
+      - ./neo4j/import:/var/lib/neo4j/import
+      - ./neo4j/logs:/var/lib/neo4j/logs
+    environment:
+      NEO4J_AUTH: neo4j/password
+      NEO4J_PLUGINS: "[\"apoc\"]"
+      NEO4J_apoc_import_file_enabled: true
+      NEO4J_apoc_import_file_use__neo4j__config: true
+
   machine-graph:
     build: 
       context: ./api
@@ -11,22 +26,10 @@ services:
       - 4000:4000
       - 9229:9229
     volumes:
-      - ./src/:/usr/api/machine/src
-      - ./api/.env:/usr/api/machine/.env
+      - ./dist/:/usr/app/src
+      - ./api/.env:/usr/app/src.env
       - ~/.config/gcloud:/home/node/.config/gcloud
     env_file:
       - ./api/.env
     depends_on:
       - neo4j
-    command: npm run install:start:dev
-
-  neo4j:
-    image: neo4j:latest
-    ports:
-      - 7474:7474
-    volumes:
-      - ./neo4j/data:/var/lib/neo4j/data
-      - ./neo4j/import:/var/lib/neo4j/import
-      - ./neo4j/logs:/var/lib/neo4j/logs
-    environment:
-      NEO4J_AUTH: neo4j/password

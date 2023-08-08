@@ -4,3 +4,4 @@ node_modules/
 api/env.production
 neo4j/data
 neo4j/logs
+api/test
