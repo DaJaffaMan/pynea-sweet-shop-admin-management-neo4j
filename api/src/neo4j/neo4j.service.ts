@@ -10,8 +10,7 @@ import path from 'path';
 export class Neo4jService implements OnApplicationShutdown {
     constructor(
         @Inject(NEO4J_CONFIG) private readonly config: Neo4jConfig,
-        @Inject(NEO4J_DRIVER) private readonly driver: Driver,
-        private readonly schemaHost: GraphQLSchemaHost
+        @Inject(NEO4J_DRIVER) private readonly driver: Driver
     ) {}
 
     getDriver(): Driver {
@@ -22,15 +21,15 @@ export class Neo4jService implements OnApplicationShutdown {
         return this.config;
     }
 
-    async generateOGM() {
-        const outFile = path.join(__dirname, "ogm-types.ts");
-        const ogm = new OGM({ typeDefs: this.schemaHost.schema, driver: this.driver })
+    // async generateOGM() {
+    //     const outFile = path.join(__dirname, "ogm-types.ts");
+    //     const ogm = new OGM({ typeDefs: this.schemaHost.schema, driver: this.driver })
 
-        await generate({
-            ogm,
-            outFile,
-        });
-    }
+    //     await generate({
+    //         ogm,
+    //         outFile,
+    //     });
+    // }
 
     beginTransaction(database?: string): Transaction {
         const session = this.getWriteSession(database)

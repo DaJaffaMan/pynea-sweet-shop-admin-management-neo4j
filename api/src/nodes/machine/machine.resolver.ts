@@ -1,5 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { FieldResolver, Root, Query } from 'type-graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { Machine, MachineInput } from './machine.types';
 import { MachineService } from './machine.service';
 // import { MachineService } from './machine.service';
@@ -22,8 +21,8 @@ export class MachineResolver {
     async addMachine(@Args('machine') machine: MachineInput) {
     }
 
-    @FieldResolver()
-    sweetsProducedByMachine(@Root() machine: Machine) {
+    @ResolveField()
+    sweetsProducedByMachine(@Parent() machine: Machine) {
         this.machineService.findSweetsForMachine(machine.id)
     }
 }

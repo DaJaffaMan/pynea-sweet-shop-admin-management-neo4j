@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Neo4jService } from '../../neo4j/neo4j.service';
-import { FieldResolver } from 'type-graphql';
+import { ResolveField } from '@nestjs/graphql';
 
 @Injectable()
 export class SweetService {
@@ -9,7 +9,7 @@ export class SweetService {
         private readonly neo4jService: Neo4jService) {
         }
 
-    @FieldResolver()
+    @ResolveField()
     async sweetsProducedInMachine(id: string): Promise<any> {
         
     }

@@ -29,14 +29,14 @@ import { MachineService } from './nodes/machine/machine.service';
       driver: ApolloDriver,
       autoSchemaFile: true,
     }),
-    GraphQLSchemaHost,
     MachineModule,
   ],
   controllers: [AppResolver, MachineResolver],
-  providers: [MachineService],
+  providers: [MachineService, GraphQLSchemaHost],
 })
 export class AppModule {
   constructor(private readonly neo4jService: Neo4jService) {
-    this.neo4jService.generateOGM();
+    // this.neo4jService.generateOGM();
   }
 }
+//"neo4j-admin database import full --overwrite-destination "--nodes=Machine=import/machines.csv,Sweet=import/sweets.csv,Order=import/orders.csv"

@@ -1,8 +1,7 @@
 import { OGM } from '@neo4j/graphql-ogm';
 import {
-    Injectable
+  Injectable
 } from '@nestjs/common';
-import { GraphQLSchemaHost } from '@nestjs/graphql';
 import { Neo4jService } from '../../neo4j/neo4j.service';
 
 export interface Genre {
@@ -12,13 +11,13 @@ export interface Genre {
 
 @Injectable()
 export class MachineService {
-  constructor(private readonly schemaHost :GraphQLSchemaHost, private readonly neo4jService: Neo4jService) {}
+  constructor(private readonly neo4j: Neo4jService) {}
 
   async findSweetsForMachine(id: string): Promise<any> {
     
-      const neo4j = this.neo4jService.getDriver();
+      const neo4j = this.neo4j.getDriver();
 
-      const mapper = new OGM({ typeDefs: this.schemaHost.schema, driver: neo4j });
+      // const mapper = new OGM({ typeDefs: this.schemaHost.schema, driver: neo4j });
       
     //   mapper.model("Sweet", {})
   }
