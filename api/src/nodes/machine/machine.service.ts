@@ -13,34 +13,37 @@ export class MachineService {
 
   constructor(private readonly neo4j: Neo4jService) { }
 
-  async findMachine(id: string): Promise<any> {
-    this.logger.debug("ID for machine", id)
+  async findMachine(id: string): Promise<Machine> {
+    this.logger.log("ID for machine", id)
 
-    const driver = this.neo4j.getDriver()
     const typedefs = await readFile('./src/gql/schema.gql', 'utf-8')
-
+    const driver = this.neo4j.getDriver()
     const ogm = new OGM({ typeDefs: typedefs, driver })
     await ogm.init()
 
-    const data = await ogm.model("Machine").find({ where: { id } });
-    this.logger.debug("Found Machines", { ...data })
+    const machine = await ogm.model("Machine").find({ where: { id } });
 
-    if (data.length > 1) {
+    this.logger.log("Found Machines", { data: machine })
+
+    if (machine.length > 1) {
       // handle error in gql manner
       this.logger.error("Found more than one machine with id", id)
     }
 
-    return { ...data[0] }
+    return { ...machine[0] }
   }
 
   async findSweetsForMachine(machine: Machine): Promise<any> {
-    const neo4j = this.neo4j.getDriver();
-    // const mapper = new OGM({ typeDefs: this.gqlConfigurationService.schema, driver: neo4j });
-      
-    // const sweet = mapper.model("Sweet")
+    this.logger.log("Machine", machine)
+    const session = this.neo4j.getDriver().session()
 
-    // this.logger.log({ sweet })
+    // const sweetsForMachine = await session.executeRead((tx: ManagedTransaction) => {
+    //   return tx.run({text: `MATCH (m:Machine {id: $id})-[PRODUCES]->(s:Sweet)
+    //   RETURN s`}, {id: machine.id})
+    // })
     
-    // return await sweet.find({ where: { machine: { id: machine.id } } });
+    // this.logger.log({ [sweetsForMachine] })
+
+    // return sweetsForMachine.records.map((record) => {return {...record.get('s:Sweet')}})
   }
 }

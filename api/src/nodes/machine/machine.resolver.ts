@@ -16,8 +16,8 @@ export class MachineResolver {
         return this.machineService.findMachine(id)
     }
 
-    // @ResolveField()
-    // sweetsProducedByMachine(@Parent() machine: Machine) {
-    //     this.machineService.findSweetsForMachine(machine)
-    // }
+    @ResolveField()
+    sweetsProducedByMachine(@Parent() machine: Machine) {
+        this.machineService.findSweetsForMachine(machine)
+    }
 }

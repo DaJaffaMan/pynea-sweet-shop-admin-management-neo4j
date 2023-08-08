@@ -5,14 +5,12 @@ import { Field, Float, ID, InputType, Int, ObjectType, PickType } from "@nestjs/
 @ObjectType()
 export class Sweet {
     @Field(() => String)
-    id: string;
-    @Field(() => String)
     name: string;
-    @Field(() => [String])
-    ingredients: string[];
-    @Field(() => Float)
+    @Field(() => String, { nullable: true})
+    ingredients: string;
+    @Field(() => Float, { nullable: true})
     price: number;
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true})
     stock: number;
 }
 
