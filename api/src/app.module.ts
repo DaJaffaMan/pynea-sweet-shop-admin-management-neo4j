@@ -3,9 +3,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AppResolver } from './app.resolver';
-import { Neo4jConfig } from './neo4j/neo4j-config.interface';
-import { Neo4jModule } from './neo4j/neo4j.module';
+import { GqlConfigurationService } from './graph/config-service';
+import { Neo4jConfig } from './neo4j/config.interface';
+import { Neo4jModule } from './neo4j/module';
 import { MachineModule } from './nodes/machine/machine.module';
+import { GraphQLSchema } from 'graphql';
+import { loggerMiddleware } from './logger/logger.middleware';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -24,7 +28,11 @@ import { MachineModule } from './nodes/machine/machine.module';
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: true,
+        typePaths: ['./**/*.graphql', './**/*.gql'],
+        autoSchemaFile: join(process.cwd(), './src/gql/schema.gql'),
+        buildSchemaOptions: {
+          fieldMiddleware: [loggerMiddleware]
+        }
     }),
     MachineModule,
   ],

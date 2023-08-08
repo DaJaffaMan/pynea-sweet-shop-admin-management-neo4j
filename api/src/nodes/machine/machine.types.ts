@@ -6,14 +6,14 @@ import { Sweet } from "../sweet/sweet.types";
 @ObjectType()
 export class Machine {
     @Field(() => String)
-    id: string;
-    @Field(() => String)
+    id!: string;
+    @Field(() => String, { nullable: true})
     type: string;
-    @Field(() => String)
+    @Field(() => String, { nullable: true})
     capacity: string;
-    @Field(() => String)
+    @Field(() => String, { nullable: true})
     status: string;
-    @Field(() => [Sweet])
+    @Field(() => [Sweet], { nullable: true})
     sweetsProducedByMachine: Sweet[]
 }
 

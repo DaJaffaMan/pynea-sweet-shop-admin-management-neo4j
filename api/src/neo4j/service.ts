@@ -1,8 +1,8 @@
 import { Inject, Injectable, OnApplicationShutdown } from '@nestjs/common';
 import { GraphQLSchemaHost } from '@nestjs/graphql';
 import neo4j, { Driver, Transaction } from 'neo4j-driver';
-import { Neo4jConfig } from './neo4j-config.interface';
-import { NEO4J_CONFIG, NEO4J_DRIVER } from './neo4j.constants';
+import { Neo4jConfig } from './config.interface';
+import { NEO4J_CONFIG, NEO4J_DRIVER } from './constants';
 import { OGM, Model, generate } from '@neo4j/graphql-ogm'
 import path from 'path';
 

@@ -11,10 +11,9 @@ async function bootstrap() {
 
   const app = await NestFactory.create<INestApplication<AppModule>>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  
   app.enableCors();
   
-  await app.listen(port);
+  await app.listen(port)
 }
 
 bootstrap();

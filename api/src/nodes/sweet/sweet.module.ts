@@ -3,7 +3,7 @@ import { SweetService } from './sweet.service';
 import { SweetResolver } from './sweet.resolver';
 
 @Module({
-  providers: [SweetService],
-  controllers: [SweetResolver],
+  providers: [SweetResolver, SweetService],
+  exports: [SweetService],
 })
 export class SweetModule {}

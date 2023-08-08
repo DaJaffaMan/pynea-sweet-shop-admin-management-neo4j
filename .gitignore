@@ -5,3 +5,4 @@ api/env.production
 neo4j/data
 neo4j/logs
 api/test
+api/src/gql/schema.gql

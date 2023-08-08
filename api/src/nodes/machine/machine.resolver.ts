@@ -13,10 +13,11 @@ export class MachineResolver {
 
     @Query(() => Machine)
     async machine(@Args('id') id: string) {
+        return this.machineService.findMachine(id)
     }
 
-    @ResolveField()
-    sweetsProducedByMachine(@Parent() machine: Machine) {
-        this.machineService.findSweetsForMachine(machine.id)
-    }
+    // @ResolveField()
+    // sweetsProducedByMachine(@Parent() machine: Machine) {
+    //     this.machineService.findSweetsForMachine(machine)
+    // }
 }
