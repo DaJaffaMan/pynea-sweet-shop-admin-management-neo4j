@@ -1,12 +1,24 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { SweetService } from './sweet.service';
+import { Sweet } from './sweet.types';
 
-@Resolver(() => Object)
+@Resolver(() => Sweet)
 export class SweetResolver {
-    @Query(() => Object)
-    async sweet(@Args('id', { type: String }) id: string) {
+    constructor(private readonly sweetService: SweetService) {
     }
 
-    @Mutation(() => Object)
-    async addSweet(@Args('sweet') sweet: Object) {
+    @Query(() => Sweet)
+    async sweet(@Args('name') name: string) {
+        return this.sweetService.sweet(name);
+    }
+
+    @Query(() => [Sweet])
+    async sweets() {
+        return this.sweetService.sweets();
+    }
+
+    @ResolveField()
+    async ordersContainingSweet(@Parent() sweet: Sweet) {
+        return this.sweetService.ordersForSweet(sweet);
     }
 }

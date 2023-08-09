@@ -9,6 +9,7 @@ export class MachineResolver {
     }
     @Query(() => [Machine])
     async machines() {
+        return this.machineService.findMachines();
     }
 
     @Query(() => Machine)

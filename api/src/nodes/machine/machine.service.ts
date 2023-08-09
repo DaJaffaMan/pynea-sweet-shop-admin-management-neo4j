@@ -17,14 +17,39 @@ export class MachineService {
 
   constructor(private readonly neo4j: Neo4jService) { }
 
-  async findMachine(machineId: string): Promise<any> {
-    this.logger.log("ID for machine", machineId)
+  async findMachines(): Promise<Machine[]> {
+    this.logger.log("Finding all machines")
 
     try {
       const typeDefs = await readFile('./src/gql/schema.gql', 'utf-8')
       const driver = this.neo4j.getDriver()
       const ogm = new OGM<ModelMap>({ typeDefs, driver })
       await ogm.init()
+
+      const session = driver.session();
+      const machineNodes = await session.executeRead((tx) => {
+        return tx.run<NeoMachine>({
+          text: `MATCH (m:Machine) RETURN m`,
+        })
+      });
+
+      const machines = machineNodes.records.map((record) => { return { ...record.toObject() } })
+      this.logger.log("Found Machines", { data: machines })
+
+
+      return machines.map(machine => {
+        return machine["m"].properties
+      })
+    } catch (error) {
+      this.logger.error(error)
+    }
+  }
+
+  async findMachine(machineId: string): Promise<Machine> {
+    this.logger.log("ID for machine", machineId)
+
+    try {
+      const driver = this.neo4j.getDriver()
 
       const session = driver.session();
       const machineNodes = await session.executeRead((tx) => {

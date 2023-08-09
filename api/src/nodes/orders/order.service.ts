@@ -1,25 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { Neo4jService } from '../../neo4j/service';
-import { ResolveField } from '@nestjs/graphql';
+import { NeoOrder, Order } from './order.types';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly neo4jService: Neo4jService) {}
+  constructor(private readonly neo4jService: Neo4jService) { }
 
-  @ResolveField()
-  async ordersOfSweet(id: string): Promise<any> {
-    const neo4j = this.neo4jService.getDriver();
+  async orders(): Promise<Order[]> {
+    const driver = this.neo4jService.getDriver()
 
-    const session = neo4j.session();
-
-    const result = await session.run(
-      `
-      MATCH (s:Sweet {id: $id})<-[:ORDERS]-(o:Order)
-      RETURN o
-      `,
-      { id }
+    const session = driver.session();
+    const orderNodes = await session.executeRead((tx) => {
+      return tx.run<NeoOrder>({
+        text: `MATCH (o:Order) RETURN o`,
+      })
+    }
     );
 
-    return result.records.map((record) => record.get('o').properties);
+    return orderNodes.records.map((record) => record.toObject()).map((order) => order["o"].properties);
   }
 }

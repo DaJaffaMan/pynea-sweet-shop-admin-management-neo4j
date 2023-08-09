@@ -1,21 +1,16 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Order } from './order.types';
-import { OrderService } from './order.service';
+import { Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
+import { Order } from "./order.types";
+import { Sweet } from "../sweet/sweet.types";
+import { OrderService } from "./order.service";
+
 
 @Resolver(() => Order)
 export class OrderResolver {
-    constructor(private readonly orderService: OrderService) {
-    }
-
-  @Query(() => Order)
-  async order(@Args('id', { type: String }) id: string) {
+  constructor(private readonly orderService: OrderService) {
   }
-    
-  @Query(() => [Order])
-  async ordersOfSweet(@Args('sweetId', { type: String }) sweetId: string) {
-    return this.orderService.ordersOfSweet(sweetId);
-  }    
 
-  @Mutation(() => Order)
-  async processOrder(@Args('order') order: Order) {}
+  @Query(() => [Order])
+  async orders() {
+    return this.orderService.orders();
+  }
 }

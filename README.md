@@ -35,6 +35,15 @@ Features:
 
         List all orders in a 'pending' or 'delivered' state.
 
+### How to run management system
+`make machine-install`
+
+
+
+`docker compose up -d neo4j`
+
+`npm run start:debug`
+
 ### Loading in the CSVs and relating nodes
 ```
 docker exec -it sweet-shop-admin-management-neo4j-neo4j-1 bash

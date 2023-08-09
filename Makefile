@@ -3,6 +3,10 @@ machine-install: ## Install backend dependencies
 	cd api && \
 	npm i
 
+
+generate-types: machine-install ## Install backend dependencies
+	cd api && npx ts-node ./scripts/generate-ogm-types.ts
+
 start-machine-graph: ## Start machine graph
 	docker compose up -d machine
 
