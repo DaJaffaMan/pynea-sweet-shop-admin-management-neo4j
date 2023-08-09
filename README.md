@@ -36,13 +36,9 @@ Features:
         List all orders in a 'pending' or 'delivered' state.
 
 ### How to run management system
-`make machine-install`
+`make install`
 
-`docker compose up -d neo4j`
-
-`npm run start:debug`
-
-`make generate-types`
+`docker compose up -d`
 
 ### Loading in the CSVs and relating nodes
 ```
@@ -51,6 +47,6 @@ docker exec -it sweet-shop-admin-management-neo4j-neo4j-1 bash
 cypher-shell -u neo4j -p password -f $NEO4J_HOME/import/load-machines.cql
 cypher-shell -u neo4j -p password -f $NEO4J_HOME/import/load-sweets.cql
 cypher-shell -u neo4j -p password -f $NEO4J_HOME/import/load-orders.cql
-cypher-shell -u neo4j -p password -f $NEO4J_HOME/import/relate-machines-and-sweets.cql 
-cypher-shell -u neo4j -p password -f $NEO4J_HOME/import/relate-orders-and-sweets.cql 
+cypher-shell -u neo4j -p password -f $NEO4J_HOME/import/relate-machines-and-sweets.cql
+cypher-shell -u neo4j -p password -f $NEO4J_HOME/import/relate-orders-and-sweets.cql
 ```
