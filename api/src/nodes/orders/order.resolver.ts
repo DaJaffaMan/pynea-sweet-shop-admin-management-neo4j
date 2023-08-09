@@ -1,7 +1,6 @@
 import { Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
-import { Order } from "./order.types";
-import { Sweet } from "../sweet/sweet.types";
 import { OrderService } from "./order.service";
+import { Order } from "./order.types";
 
 
 @Resolver(() => Order)
@@ -12,5 +11,10 @@ export class OrderResolver {
   @Query(() => [Order])
   async orders() {
     return this.orderService.orders();
+  }
+
+  @Query(() => [Order])
+  async deliveredOrPendingOrders() {
+    return this.orderService.findPendingAndDeliveredOrders();
   }
 }

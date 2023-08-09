@@ -17,6 +17,12 @@ export class SweetResolver {
         return this.sweetService.sweets();
     }
 
+
+    @Query(() => [Sweet])
+    async sweetsWithQuantityLessThan(@Args("quantity") quantity: number) {
+        return this.sweetService.sweets();
+    }
+
     @ResolveField()
     async ordersContainingSweet(@Parent() sweet: Sweet) {
         return this.sweetService.ordersForSweet(sweet);

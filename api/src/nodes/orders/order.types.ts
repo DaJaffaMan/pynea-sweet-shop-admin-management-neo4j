@@ -12,7 +12,7 @@ export type NeoOrder = Node<Integer, {
 
 export type Contains = Relationship<Integer, {}>
 
-export interface OrdersContainingSweet { 
+export interface OrdersContainingSweet {
     o: NeoOrder[];
     r: Contains;
     s: Sweet;

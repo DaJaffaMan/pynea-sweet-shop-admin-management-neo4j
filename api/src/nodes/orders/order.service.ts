@@ -19,4 +19,18 @@ export class OrderService {
 
     return orderNodes.records.map((record) => record.toObject()).map((order) => order["o"].properties);
   }
+
+  async findPendingAndDeliveredOrders(): Promise<Order[]> {
+    const driver = this.neo4jService.getDriver()
+
+    const session = driver.session();
+    const orderNodes = await session.executeRead((tx) => {
+      return tx.run<NeoOrder>({
+        text: `MATCH (o:Order) WHERE o.status = "Pending" OR o.status = "Delivered" RETURN o`,
+      })
+    }
+    );
+
+    return orderNodes.records.map((record) => record.toObject()).map((order) => order["o"].properties);
+  }
 }

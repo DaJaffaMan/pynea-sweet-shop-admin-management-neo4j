@@ -52,6 +52,20 @@ export class SweetService {
         }
     }
 
+    async sweetsWithQuantityLessThan(quantity: number): Promise<Sweet[]> {
+        const driver = this.neo4jService.getDriver()
+
+        const sweetNodes = await driver.session().executeRead((tx) => {
+            return tx.run<NeoSweet>({
+                text: `MATCH (s:Sweet) WHERE s.stock < $quantity RETURN s`,
+                parameters: { quantity: quantity },
+            })
+        }
+        );
+
+        return sweetNodes.records.map((record) => record.toObject()).map((sweet) => sweet["s"].properties);
+    }
+
     async ordersForSweet(sweet: Sweet): Promise<any> {
         const driver = this.neo4jService.getDriver()
 
