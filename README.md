@@ -38,11 +38,11 @@ Features:
 ### How to run management system
 `make machine-install`
 
-
-
 `docker compose up -d neo4j`
 
 `npm run start:debug`
+
+`make generate-types`
 
 ### Loading in the CSVs and relating nodes
 ```

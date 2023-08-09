@@ -26,6 +26,8 @@ services:
       - ~/.config/gcloud:/home/node/.config/gcloud
     env_file:
       - ./api/.env
+    ports:
+      - 4000:4000
     command: ["npm", "run", "start:debug"]
     depends_on:
       - neo4j

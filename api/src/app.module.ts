@@ -28,7 +28,6 @@ import { SweetModule } from './nodes/sweet/sweet.module';
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      typePaths: ['./**/*.graphql', './**/*.gql'],
       autoSchemaFile: join(process.cwd(), './src/gql/schema.gql'),
       buildSchemaOptions: {
         fieldMiddleware: [loggerMiddleware]

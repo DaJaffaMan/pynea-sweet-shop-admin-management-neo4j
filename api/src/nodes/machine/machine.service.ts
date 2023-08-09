@@ -1,14 +1,11 @@
-import { OGM } from '@neo4j/graphql-ogm';
 import {
   Injectable,
   Logger
 } from '@nestjs/common';
-import { readFile } from 'fs/promises';
-import { MachineModel, ModelMap } from '../../gql/ogm-types';
-import { Neo4jService } from '../../neo4j/service';
-import { Machine, NeoMachine } from './machine.types';
 import { ManagedTransaction } from 'neo4j-driver';
+import { Neo4jService } from '../../neo4j/service';
 import { Sweet } from '../sweet/sweet.types';
+import { Machine, NeoMachine } from './machine.types';
 
 
 @Injectable()
@@ -21,10 +18,7 @@ export class MachineService {
     this.logger.log("Finding all machines")
 
     try {
-      const typeDefs = await readFile('./src/gql/schema.gql', 'utf-8')
       const driver = this.neo4j.getDriver()
-      const ogm = new OGM<ModelMap>({ typeDefs, driver })
-      await ogm.init()
 
       const session = driver.session();
       const machineNodes = await session.executeRead((tx) => {
