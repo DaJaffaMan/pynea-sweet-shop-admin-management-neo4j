@@ -1,3 +1,6 @@
 // CSV dump. uuids is probably better for this
 LOAD CSV WITH HEADERS FROM 'file:///machines.csv' AS machine
-MERGE (m1:Machine {id: machine.machineId, type: machine.type, capacity: toInteger(machine.capacity), status: machine.status}})
+CREATE (m1:Machine {machineId: machine.machineId})
+SET m1.type = machine.type,
+    m1.capacity = machine.capacity,
+    m1.status = machine.status

@@ -10,11 +10,6 @@ services:
       - ./neo4j/data:/var/lib/neo4j/data
       - ./neo4j/import:/var/lib/neo4j/import
       - ./neo4j/logs:/var/lib/neo4j/logs
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:7474/", "||", "exit 1"] 
-      interval: 10s
-      timeout: 2s
-      retries: 10
     environment:
       NEO4J_AUTH: neo4j/password
       NEO4J_PLUGINS: "[\"apoc\"]"
@@ -24,18 +19,13 @@ services:
 
   machine-graph:
     build: 
-      context: ./api
-      dockerfile: ./machine.Dockerfile
-      target: development
+      dockerfile: ./api/machine.Dockerfile
     platform: linux/amd64
-    ports: 
-      - 4000:4000
-      - 9229:9229
     volumes:
-      - ./dist/:/usr/app/src
-      - ./api/.env:/usr/app/src.env
+      - ./api/src:/home/node/app/src
       - ~/.config/gcloud:/home/node/.config/gcloud
     env_file:
       - ./api/.env
+    command: ["npm", "run", "start:debug"]
     depends_on:
       - neo4j

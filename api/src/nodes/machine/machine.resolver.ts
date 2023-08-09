@@ -12,12 +12,12 @@ export class MachineResolver {
     }
 
     @Query(() => Machine)
-    async machine(@Args('id') id: string) {
-        return this.machineService.findMachine(id)
+    async machine(@Args('machineId') machineId: string): Promise<Machine> {
+        return this.machineService.findMachine(machineId)
     }
 
     @ResolveField()
     sweetsProducedByMachine(@Parent() machine: Machine) {
-        this.machineService.findSweetsForMachine(machine)
+        return this.machineService.findSweetsForMachine(machine)
     }
 }
