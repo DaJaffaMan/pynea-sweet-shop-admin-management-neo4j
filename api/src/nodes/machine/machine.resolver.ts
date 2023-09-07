@@ -4,21 +4,19 @@ import { Machine } from './machine.types';
 
 @Resolver(() => Machine)
 export class MachineResolver {
-    constructor(private readonly machineService: MachineService) {
+  constructor(private readonly machineService: MachineService) {}
+  @Query(() => [Machine])
+  async machines() {
+    return this.machineService.findMachines();
+  }
 
-    }
-    @Query(() => [Machine])
-    async machines() {
-        return this.machineService.findMachines();
-    }
+  @Query(() => Machine)
+  async machine(@Args('machineId') machineId: string): Promise<Machine> {
+    return this.machineService.findMachine(machineId);
+  }
 
-    @Query(() => Machine)
-    async machine(@Args('machineId') machineId: string): Promise<Machine> {
-        return this.machineService.findMachine(machineId)
-    }
-
-    @ResolveField()
-    sweetsProducedByMachine(@Parent() machine: Machine) {
-        return this.machineService.findSweetsForMachine(machine)
-    }
+  @ResolveField()
+  sweetsProducedByMachine(@Parent() machine: Machine) {
+    return this.machineService.findSweetsForMachine(machine);
+  }
 }

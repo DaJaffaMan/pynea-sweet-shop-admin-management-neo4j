@@ -6,7 +6,11 @@ describe('Neo4jService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [Neo4jService],
+      providers: [
+        Neo4jService,
+        { provide: 'NEO4J_CONFIG', useValue: jest.fn() },
+        { provide: 'NEO4J_DRIVER', useValue: jest.fn() },
+      ],
     }).compile();
 
     service = module.get<Neo4jService>(Neo4jService);

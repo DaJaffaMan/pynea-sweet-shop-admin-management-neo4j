@@ -13,8 +13,13 @@ describe('AppResolver', () => {
   });
 
   describe('root', () => {
+
+    it('should be defined"', () => {
+      expect(appResolver).toBeDefined();
+    });
+
     it('should return "Hello World!"', () => {
-      expect(appResolver.health()).toBe('up!');
+      expect(appResolver.health()).toEqual('up!');
     });
   });
 });
